@@ -48,14 +48,54 @@ let employee: Employees = {
 };
 
 // Advance types -
-
+// Narrowing
 function KgToLbs(weight: number | string): number {
-  if (typeof weight === "number") {
-    return weight * 2.3;
-  } else {
-    return parseInt(weight) * 1.1;
-  }
+  if (typeof weight === "number") return weight * 2.3;
+  else return parseInt(weight) * 1.1;
 }
 
 KgToLbs(20);
 KgToLbs("20");
+
+// Intersection type
+
+type Draggable = {
+  drag: () => void;
+};
+
+type Resizable = {
+  resize: () => void;
+};
+
+type UiWidget = Draggable & Resizable;
+
+let textBox: UiWidget = {
+  drag: () => {},
+  resize: () => {},
+};
+
+// Literal types
+
+type Quantity = 10 | 20;
+
+let quantity: Quantity = 10;
+
+type Unit = "inc" | "fit";
+
+function greet(name: string | null): string {
+  if (name) return name.toLowerCase();
+  else return "hola";
+}
+
+greet("deepak");
+
+type Customer = {
+  birthday: Date;
+};
+
+function getCustomer(id: number): Customer | null | undefined {
+  return id === 0 ? null : { birthday: new Date() };
+}
+
+let customer = getCustomer(0);
+if (customer !== null && customer !== undefined) console.log(customer.birthday);
